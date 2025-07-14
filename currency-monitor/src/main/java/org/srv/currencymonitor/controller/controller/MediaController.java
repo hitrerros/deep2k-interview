@@ -1,5 +1,7 @@
 package org.srv.currencymonitor.controller.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -11,12 +13,15 @@ import org.srv.currencymonitor.service.CurrencyBroadcastService;
 
 @RestController
 @RequestMapping("/")
+@Tag(name = "Media operations")
 public class MediaController {
 
     @Autowired
     private CurrencyBroadcastService currencyBroadcastService;
 
     @GetMapping
+    @Operation(method = "Hand over currency data to external services", description = "Pull out Kafka topic data (currency)" +
+            " and hand over to services on-demand")
     public ResponseEntity<String> getUpToDateAdvert() {
         var content = currencyBroadcastService.retrieveCurrencyToExternalServices();
 
