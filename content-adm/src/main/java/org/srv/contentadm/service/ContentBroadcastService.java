@@ -1,8 +1,9 @@
 package org.srv.contentadm.service;
 
-import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.srv.contentadm.model.Currency;
 import org.srv.contentadm.model.Facility;
@@ -30,11 +31,14 @@ public class ContentBroadcastService {
     private FacilityRepository facilityRepository;
 
     @Autowired
-    private KafkaProducer<String, byte[]> advertProducer;
+    @Qualifier("byteArrayKafkaTemplate")
+    private KafkaTemplate<String, byte[]> advertProducer;
     @Autowired
-    private KafkaProducer<String, Set<Currency>> currencyProducer;
+    @Qualifier("genericKafkaTemplate")
+    private KafkaTemplate<String, Set<Currency>> currencyProducer;
     @Autowired
-    private KafkaProducer<String, Set<Facility>> facilityProducer;
+    @Qualifier("genericKafkaTemplate")
+    private KafkaTemplate<String, Set<Facility>> facilityProducer;
 
     public void sendVideoToConsumers() {
         var availableVideos =
