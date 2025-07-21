@@ -1,8 +1,6 @@
 package org.srv.currencymonitor.configuation;
 
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.OffsetResetStrategy;
-import org.apache.kafka.common.serialization.ByteArrayDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +12,9 @@ import org.srv.currencymonitor.dto.CurrencyDeserializer;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
+import static org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG;
+
 @Configuration
 public class KafkaConfiguration {
 
@@ -21,11 +22,11 @@ public class KafkaConfiguration {
     public ConsumerFactory<String, byte[]> videoConsumer() {
         Map<String, Object> config = new HashMap<>();
 
-        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        config.put(ConsumerConfig.GROUP_ID_CONFIG, "currency-1");
-        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, CurrencyDeserializer.class);
-        config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, OffsetResetStrategy.EARLIEST.name().toLowerCase());
+        config.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        config.put(GROUP_ID_CONFIG, "currency-1");
+        config.put(KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        config.put(VALUE_DESERIALIZER_CLASS_CONFIG, CurrencyDeserializer.class);
+        config.put(AUTO_OFFSET_RESET_CONFIG, OffsetResetStrategy.EARLIEST.name().toLowerCase());
 
         return new DefaultKafkaConsumerFactory<>(config);
     }
