@@ -27,7 +27,6 @@ services:
       KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
       CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-
     networks:
       - exchange-net
 
@@ -41,10 +40,8 @@ services:
     environment:
       - KAFKA_CLUSTERS_0_NAME=local
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-broker:9092
-
     networks:
       - exchange-net
-
 
   content-adm:
     build:
@@ -84,4 +81,3 @@ services:
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka-broker:9092
     networks:
       - exchange-net
-
