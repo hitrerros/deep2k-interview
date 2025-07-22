@@ -1,10 +1,12 @@
-
+#
+#  Docker compose description
+#  includes kafka + kafkaUI images and content-adm, currency and video services
+#
 networks:
   exchange-net:
     driver: bridge
 
 services:
-
   kafka_broker:
     image: apache/kafka:latest
     hostname: broker

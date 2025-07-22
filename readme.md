@@ -1,5 +1,8 @@
 
-subsets-task1    - задание 1 на комбинации
-content-adm      - сервис раздачи контента и модерации
-advertiser       - сервис рекламы
-currency-monitor - сервис валют
+## Java applications, CI/CD example
+### Stack: Java 17, Docker Compose, Kafka, Swagger UI
+
+`content-adm`       - moderation & content fan-out service  
+`advertiser`        - advertisement consumer service
+`currency-monitor`  - currency consumer service
+`subsets-task1`     - permutations task
