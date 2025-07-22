@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'maven:3.9.5-eclipse-temurin-17'
+        }
+    }
 
     environment {
         ROOT_DIR             = "${WORKSPACE}"
