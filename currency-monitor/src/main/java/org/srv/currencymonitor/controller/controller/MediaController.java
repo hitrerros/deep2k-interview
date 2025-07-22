@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.srv.currencymonitor.service.CurrencyBroadcastService;
 
 @RestController
-@RequestMapping("/")
-@Tag(name = "Media operations")
+@RequestMapping("/currencies")
+@Tag(name = "Currency operations")
 public class MediaController {
 
     @Autowired

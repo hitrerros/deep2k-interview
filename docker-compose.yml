@@ -1,4 +1,8 @@
 
+networks:
+  exchange-net:
+    driver: bridge
+
 services:
 
   kafka_broker:
@@ -20,6 +24,10 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
       CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+    networks:
+      - exchange-net
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -32,6 +40,10 @@ services:
       - KAFKA_CLUSTERS_0_NAME=local
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-broker:9092
 
+    networks:
+      - exchange-net
+
+
   content-adm:
     build:
       context: ./content-adm
@@ -42,6 +54,8 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/postgres?currentSchema=deep2k
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka-broker:9092
+    networks:
+      - exchange-net
 
   advertiser:
     build:
@@ -53,6 +67,8 @@ services:
       - content-adm
     environment:
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka-broker:9092
+    networks:
+      - exchange-net
 
   currency-monitor:
     build:
@@ -64,4 +80,6 @@ services:
       - content-adm
     environment:
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka-broker:9092
+    networks:
+      - exchange-net
 
