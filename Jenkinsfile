@@ -1,4 +1,6 @@
 pipeline {
+
+   agent any
     agent {
         docker {
             image 'maven:3.9.5-eclipse-temurin-17'
@@ -21,15 +23,12 @@ pipeline {
 
          stage('Build jars') {
             steps {
-                dir("${env.CONTENT_ADM_DIR}") {
-                    sh 'mvn clean package -DskipTests'
-                }
-                dir("${env.ADVERTISER_DIR}") {
-                    sh 'mvn clean package -DskipTests'
-                }
-                dir("${env.CURRENCY_MONITOR_DIR}") {
-                    sh 'mvn clean package -DskipTests'
-                }
+                script {
+                    docker.image('maven:3.9.5-eclipse-temurin-17').inside {
+                        sh "mvn -f ${env.CONTENT_ADM_DIR}/pom.xml clean package -DskipTests"
+                        sh "mvn -f ${env.ADVERTISER_DIR}/pom.xml clean package -DskipTests"
+                        sh "mvn -f ${env.CURRENCY_MONITOR_DIR}/pom.xml clean package -DskipTests"
+                    }
             }
          }
 
